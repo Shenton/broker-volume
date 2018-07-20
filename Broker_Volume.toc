@@ -1,0 +1,41 @@
+﻿## Interface: 80000
+## Title: Broker Volume
+## Notes: A volume control for Data Broker.
+## Author: Shenton
+## SavedVariables: BrokerVolumeDB
+## Version: 1.7.2
+## OptionalDeps: Ace3, LibDBIcon-1.0
+
+#@no-lib-strip@
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+Libs\AceAddon-3.0\AceAddon-3.0.xml
+Libs\AceEvent-3.0\AceEvent-3.0.xml
+Libs\AceTimer-3.0\AceTimer-3.0.xml
+Libs\AceHook-3.0\AceHook-3.0.xml
+Libs\AceDB-3.0\AceDB-3.0.xml
+Libs\AceLocale-3.0\AceLocale-3.0.xml
+Libs\AceConsole-3.0\AceConsole-3.0.xml
+#@end-no-lib-strip@
+
+Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+
+#@no-lib-strip@
+Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
+#@end-no-lib-strip@
+
+Localization\Locales-deDE.lua
+Localization\Locales-enUS.lua
+Localization\Locales-esES.lua
+Localization\Locales-esMX.lua
+Localization\Locales-frFR.lua
+Localization\Locales-itIT.lua
+Localization\Locales-koKR.lua
+Localization\Locales-ptBR.lua
+Localization\Locales-ruRU.lua
+Localization\Locales-zhCN.lua
+Localization\Locales-zhTW.lua
+
+Core.lua
+
+VolumeSliders.lua
