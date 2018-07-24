@@ -3,7 +3,7 @@
 ## Notes: A volume control for Data Broker.
 ## Author: Shenton
 ## SavedVariables: BrokerVolumeDB
-## Version: 1.7.4
+## Version: 1.7.5
 ## OptionalDeps: Ace3, LibDBIcon-1.0
 
 #@no-lib-strip@
