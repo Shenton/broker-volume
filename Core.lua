@@ -848,7 +848,7 @@ function A:ToggleAll()
             SetCVar("Sound_EnableAmbience", 1, "Doh!");
             SetCVar("Sound_EnableDialog", 1, "Doh!");
             SetCVar("Sound_EnableMusic", 1, "Doh!");
-            ActionStatus_DisplayMessage(ENABLE_SOUND, true);
+            ActionStatus_DisplayMessage(L["Enable Sound"], true);
         else
             SetCVar("Sound_EnableSFX", 0, "Doh!");
             SetCVar("Sound_EnableAmbience", 0, "Doh!");
@@ -899,7 +899,7 @@ function A:ForceAll(off)
         SetCVar("Sound_EnableAmbience", 1, "Doh!");
         SetCVar("Sound_EnableDialog", 1, "Doh!");
         SetCVar("Sound_EnableMusic", 1, "Doh!");
-        ActionStatus_DisplayMessage(ENABLE_SOUND, true);
+        ActionStatus_DisplayMessage(L["Enable Sound"], true);
     end
 end
 
