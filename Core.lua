@@ -102,7 +102,7 @@ local function DropdownMenu(self, level)
         UIDropDownMenu_AddButton(info, level);
 
         -- Sound options (menu)
-        info.text = L["PLayback"];
+        info.text = L["Playback"];
         info.value = "SOUNDOPTIONS";
         info.hasArrow = 1;
         info.notCheckable = 1;
