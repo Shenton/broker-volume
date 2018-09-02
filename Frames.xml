@@ -1,0 +1,49 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+    <Frame name="BrokerVolumeSliderButtonTemplate" inherits="UIDropDownCustomMenuEntryTemplate" mixin="BrokerVolumeSliderButtonTemplateMixin" virtual="true">
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+        </Scripts>
+    </Frame>
+
+    <Frame name="BrokerVolumeSliderVolumeButtonTemplate" inherits="UIDropDownCustomMenuEntryTemplate" mixin="BrokerVolumeSliderVolumeButtonTemplateMixin" virtual="true">
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+        </Scripts>
+    </Frame>
+
+    <Slider name="BrokerVolumeSliderTemplate" inherits="UnitPopupSliderTemplate" virtual="true">
+        <Size x="0" y="17"/>
+        <Anchors>
+            <Anchor point="LEFT" x="5" y="0"/>
+            <Anchor point="RIGHT" relativeKey="$parent.Text" relativePoint="LEFT" x="-5" y="0"/>
+        </Anchors>
+        <Scripts>
+            <OnLoad method="OnLoad"/>
+        </Scripts>
+    </Slider>
+    
+    <Frame name="BrokerVolumeVolumeStepSlider" inherits="BrokerVolumeSliderButtonTemplate">
+        <Size x="200" y="16"/>
+        <Frames>
+            <Frame parentKey="Text" inherits="UnitPopupVoiceTextTemplate"/>
+            <Slider parentKey="Slider" minValue="1" maxValue="20" inherits="BrokerVolumeSliderTemplate" mixin="BrokerVolumeVolumeStepSliderMixin"/>
+        </Frames>
+    </Frame>
+
+    <Frame name="BrokerVolumeQueuedVolumeSlider" inherits="BrokerVolumeSliderVolumeButtonTemplate">
+        <Size x="200" y="16"/>
+        <Frames>
+            <Frame parentKey="Text" inherits="UnitPopupVoiceTextTemplate"/>
+            <Slider parentKey="Slider" minValue="0" maxValue="100" inherits="BrokerVolumeSliderTemplate" mixin="BrokerVolumeQueuedVolumeSliderMixin"/>
+        </Frames>
+    </Frame>
+
+    <Frame name="BrokerVolumeCombatVolumeSlider" inherits="BrokerVolumeSliderVolumeButtonTemplate">
+        <Size x="200" y="16"/>
+        <Frames>
+            <Frame parentKey="Text" inherits="UnitPopupVoiceTextTemplate"/>
+            <Slider parentKey="Slider" minValue="0" maxValue="100" inherits="BrokerVolumeSliderTemplate" mixin="BrokerVolumeCombatVolumeSliderMixin"/>
+        </Frames>
+    </Frame>
+</Ui>

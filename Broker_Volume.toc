@@ -3,7 +3,7 @@
 ## Notes: A volume control for Data Broker.
 ## Author: Shenton
 ## SavedVariables: BrokerVolumeDB
-## Version: 1.7.5
+## Version: 1.8.0
 ## OptionalDeps: Ace3, LibDBIcon-1.0
 
 #@no-lib-strip@
@@ -39,3 +39,5 @@ Localization\Locales-zhTW.lua
 Core.lua
 
 VolumeSliders.lua
+
+Frames.xml

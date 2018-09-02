@@ -59,6 +59,85 @@ A.color =
 -- Dropdown menu
 -- ********************************************************************************
 
+-- Common mixin
+BrokerVolumeSliderButtonTemplateMixin = {};
+
+function BrokerVolumeSliderButtonTemplateMixin:OnLoad()
+    local function UpdateText(slider, value, isMouse)
+        self.Text:SetText(value);
+    end
+
+    self.Slider:RegisterPropertyChangeHandler("OnValueChanged", UpdateText);
+end
+
+function BrokerVolumeSliderButtonTemplateMixin:OnSetOwningButton()
+    self.Slider:UpdateVisibleState();
+end
+
+BrokerVolumeSliderVolumeButtonTemplateMixin = {};
+
+function BrokerVolumeSliderVolumeButtonTemplateMixin:OnLoad()
+    local function UpdateText(slider, value, isMouse)
+        local color = A:ColorGradient(value);
+        value = FormatPercentage(value / 100, true);
+        self.Text:SetText(color..value);
+    end
+
+    self.Slider:RegisterPropertyChangeHandler("OnValueChanged", UpdateText);
+end
+
+function BrokerVolumeSliderVolumeButtonTemplateMixin:OnSetOwningButton()
+    self.Slider:UpdateVisibleState();
+end
+
+-- Volume Step mixin
+BrokerVolumeVolumeStepSliderMixin = {};
+
+local function VolumeStepSliderAccessor()
+    return A.db.profile.volumeStep;
+end
+
+local function VolumeStepSliderMutator(val)
+    A.db.profile.volumeStep = A:Round(val);
+end
+
+function BrokerVolumeVolumeStepSliderMixin:OnLoad()
+    self:SetAccessorFunction(VolumeStepSliderAccessor);
+    self:SetMutatorFunction(VolumeStepSliderMutator);
+end
+
+-- Queued Volume mixin
+BrokerVolumeQueuedVolumeSliderMixin = {};
+
+local function QueuedVolumeSliderAccessor()
+    return A.db.profile.queuedVolume.volumeLevel*100;
+end
+
+local function QueuedVolumeSliderMutator(val)
+    A.db.profile.queuedVolume.volumeLevel = A:Round(val/100, 2);
+end
+
+function BrokerVolumeQueuedVolumeSliderMixin:OnLoad()
+    self:SetAccessorFunction(QueuedVolumeSliderAccessor);
+    self:SetMutatorFunction(QueuedVolumeSliderMutator);
+end
+
+-- Combat Volume mixin
+BrokerVolumeCombatVolumeSliderMixin = {};
+
+local function CombatVolumeSliderAccessor()
+    return A.db.profile.combatVolumeLevel*100;
+end
+
+local function CombatVolumeSliderMutator(val)
+    A.db.profile.combatVolumeLevel = A:Round(val/100, 2);
+end
+
+function BrokerVolumeCombatVolumeSliderMixin:OnLoad()
+    self:SetAccessorFunction(CombatVolumeSliderAccessor);
+    self:SetMutatorFunction(CombatVolumeSliderMutator);
+end
+
 --- The dropdown menu structure function
 -- @usage Called by ToggleDropDownMenu()
 -- @param self Frame object
@@ -78,6 +157,7 @@ local function DropdownMenu(self, level)
         info.iconOnly = nil;
         info.iconInfo = nil;
         info.hasArrow = nil;
+        info.customFrame = nil;
         UIDropDownMenu_AddButton(info, level);
 
         -- Set options
@@ -300,61 +380,21 @@ local function DropdownMenu(self, level)
         UIDropDownMenu_AddButton(info, level);
     elseif ( level == 2 ) then
         if ( UIDROPDOWNMENU_MENU_VALUE == "VOLUMESTEP" ) then
-            -- 1%
-            info.text = "1%";
+            info.text = nil;
             info.notCheckable = nil;
             info.isNotRadio = nil;
             info.disabled = nil;
             info.leftPadding = nil;
-            info.checked = function()
-                if ( A.db.profile.volumeStep == 1 ) then
-                    return 1;
-                end
-
-                return nil;
-            end;
-            info.func = function()
-                A.db.profile.volumeStep = 1;
-                A:UpdateSliders();
-            end;
-            UIDropDownMenu_AddButton(info, level);
-
-            -- 5%
-            info.text = "5%";
-            info.notCheckable = nil;
-            info.checked = function()
-                if ( A.db.profile.volumeStep == 5 ) then
-                    return 1;
-                end
-
-                return nil;
-            end;
-            info.func = function()
-                A.db.profile.volumeStep = 5;
-                A:UpdateSliders();
-            end;
-            UIDropDownMenu_AddButton(info, level);
-
-            -- 10%
-            info.text = "10%";
-            info.notCheckable = nil;
-            info.checked = function()
-                if ( A.db.profile.volumeStep == 10 ) then
-                    return 1;
-                end
-
-                return nil;
-            end;
-            info.func = function()
-                A.db.profile.volumeStep = 10;
-                A:UpdateSliders();
-            end;
+            info.checked = nil;
+            info.func = nil;
+            info.customFrame = BrokerVolumeVolumeStepSlider;
             UIDropDownMenu_AddButton(info, level);
         elseif ( UIDROPDOWNMENU_MENU_VALUE == "SOUNDOPTIONS" ) then
             -- Sound Effects
             info.leftPadding = nil;
             info.notCheckable = nil;
             info.isNotRadio = nil;
+            info.customFrame = nil;
             info.text = L["Sound Effects"];
             info.checked = A:GetCVarBool("Sound_EnableSFX");
             info.func = function()
@@ -540,77 +580,25 @@ local function DropdownMenu(self, level)
             end;
             UIDropDownMenu_AddButton(info, level);
         elseif ( UIDROPDOWNMENU_MENU_VALUE == "QUEUEDVOLUME" ) then
-            -- 25%
-            info.text = "25%";
+            info.text = nil;
             info.notCheckable = nil;
             info.isNotRadio = nil;
             info.disabled = nil;
             info.leftPadding = nil;
-            info.checked = function()
-                if ( A.db.profile.queuedVolume.volumeLevel == 0.25 ) then
-                    return 1;
-                end
-
-                return nil;
-            end;
-            info.func = function() A.db.profile.queuedVolume.volumeLevel = 0.25; end;
-            UIDropDownMenu_AddButton(info, level);
-
-            -- 50%
-            info.text = "50%";
-            info.notCheckable = nil;
-            info.checked = function()
-                if ( A.db.profile.queuedVolume.volumeLevel == 0.5 ) then
-                    return 1;
-                end
-
-                return nil;
-            end;
-            info.func = function() A.db.profile.queuedVolume.volumeLevel = 0.5; end;
-            UIDropDownMenu_AddButton(info, level);
-
-            -- 75%
-            info.text = "75%";
-            info.notCheckable = nil;
-            info.checked = function()
-                if ( A.db.profile.queuedVolume.volumeLevel == 0.75 ) then
-                    return 1;
-                end
-
-                return nil;
-            end;
-            info.func = function() A.db.profile.queuedVolume.volumeLevel = 0.75; end;
-            UIDropDownMenu_AddButton(info, level);
-
-            -- 100%
-            info.text = "100%";
-            info.notCheckable = nil;
-            info.checked = function()
-                if ( A.db.profile.queuedVolume.volumeLevel == 1 ) then
-                    return 1;
-                end
-
-                return nil;
-            end;
-            info.func = function() A.db.profile.queuedVolume.volumeLevel = 1; end;
+            info.checked = nil;
+            info.func = nil;
+            info.customFrame = BrokerVolumeQueuedVolumeSlider;
             UIDropDownMenu_AddButton(info, level);
         elseif ( UIDROPDOWNMENU_MENU_VALUE == "COMBATVOLUME" ) then
-            for i=0,10 do
-                info.text = tostring(i*10).."%";
-                info.notCheckable = nil;
-                info.isNotRadio = nil;
-                info.disabled = nil;
-                info.leftPadding = nil;
-                info.checked = function()
-                    if ( A.db.profile.combatVolumeLevel == 0.1*i ) then
-                        return 1;
-                    end
-
-                    return nil;
-                end;
-                info.func = function() A.db.profile.combatVolumeLevel = 0.1*i; end;
-                UIDropDownMenu_AddButton(info, level);
-            end
+            info.text = nil;
+            info.notCheckable = nil;
+            info.isNotRadio = nil;
+            info.disabled = nil;
+            info.leftPadding = nil;
+            info.checked = nil;
+            info.func = nil;
+            info.customFrame = BrokerVolumeCombatVolumeSlider;
+            UIDropDownMenu_AddButton(info, level);
         elseif ( UIDROPDOWNMENU_MENU_VALUE == "SOUNDOUTPUT" ) then
             local num = Sound_GameSystem_GetNumOutputDrivers();
 
@@ -620,6 +608,7 @@ local function DropdownMenu(self, level)
                 info.isNotRadio = nil;
                 info.disabled = nil;
                 info.leftPadding = nil;
+                info.customFrame = nil
                 info.checked = function()
                     if ( tonumber(GetCVar("Sound_OutputDriverIndex")) == i ) then
                         return 1;
