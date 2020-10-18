@@ -32,7 +32,7 @@ local math = math;
 -- GLOBALS: UIDropDownMenu_AddButton, UIDROPDOWNMENU_MENU_VALUE, CloseDropDownMenus, DEFAULT_CHAT_FRAME, GetCVar
 -- GLOBALS: SOUND_DISABLED, GameTooltip, ToggleDropDownMenu, IsShiftKeyDown, CreateFrame, PlaySound, SetCVar
 -- GLOBALS: GetLFGProposal, GetCursorPosition, UIParent, Sound_GameSystem_RestartSoundSystem, tonumber
--- GLOBALS: ENABLE_SOUND, ActionStatus_DisplayMessage, SOUND_EFFECTS_ENABLED, SOUND_EFFECTS_DISABLED
+-- GLOBALS: ENABLE_SOUND, ActionStatus:DisplayMessage, SOUND_EFFECTS_ENABLED, SOUND_EFFECTS_DISABLED
 -- GLOBALS: MUSIC_ENABLED, MUSIC_DISABLED, AudioOptionsFrame_AudioRestart
 
 -- ********************************************************************************
@@ -796,14 +796,14 @@ end
 --- Blizzard default function Sound_ToggleMusic()
 function A:ToggleMusic()
     if ( GetCVar("Sound_EnableAllSound") == "0" ) then
-        ActionStatus_DisplayMessage(SOUND_DISABLED, true);
+        ActionStatus:DisplayMessage(SOUND_DISABLED, true);
     else
         if ( GetCVar("Sound_EnableMusic") == "0" ) then
             SetCVar("Sound_EnableMusic", 1, "Doh!");
-            ActionStatus_DisplayMessage(MUSIC_ENABLED, true)
+            ActionStatus:DisplayMessage(MUSIC_ENABLED, true)
         else
             SetCVar("Sound_EnableMusic", 0, "Doh!");
-            ActionStatus_DisplayMessage(MUSIC_DISABLED, true)
+            ActionStatus:DisplayMessage(MUSIC_DISABLED, true)
         end
     end
 end
@@ -811,18 +811,18 @@ end
 --- Blizzard default function Sound_ToggleSound()
 function A:ToggleSound()
     if ( GetCVar("Sound_EnableAllSound") == "0" ) then
-        ActionStatus_DisplayMessage(SOUND_DISABLED, true);
+        ActionStatus:DisplayMessage(SOUND_DISABLED, true);
     else
         if ( GetCVar("Sound_EnableSFX") == "0" ) then
             SetCVar("Sound_EnableSFX", 1, "Doh!");
             SetCVar("Sound_EnableAmbience", 1, "Doh!");
             SetCVar("Sound_EnableDialog", 1, "Doh!");
-            ActionStatus_DisplayMessage(SOUND_EFFECTS_ENABLED, true);
+            ActionStatus:DisplayMessage(SOUND_EFFECTS_ENABLED, true);
         else
             SetCVar("Sound_EnableSFX", 0, "Doh!");
             SetCVar("Sound_EnableAmbience", 0, "Doh!");
             SetCVar("Sound_EnableDialog", 0, "Doh!");
-            ActionStatus_DisplayMessage(SOUND_EFFECTS_DISABLED, true);
+            ActionStatus:DisplayMessage(SOUND_EFFECTS_DISABLED, true);
         end
     end
 end
@@ -830,20 +830,20 @@ end
 --- Toggle all sounds
 function A:ToggleAll()
     if ( GetCVar("Sound_EnableAllSound") == "0" ) then
-        ActionStatus_DisplayMessage(SOUND_DISABLED, true);
+        ActionStatus:DisplayMessage(SOUND_DISABLED, true);
     else
         if ( GetCVar("Sound_EnableSFX") == "0" ) then
             SetCVar("Sound_EnableSFX", 1, "Doh!");
             SetCVar("Sound_EnableAmbience", 1, "Doh!");
             SetCVar("Sound_EnableDialog", 1, "Doh!");
             SetCVar("Sound_EnableMusic", 1, "Doh!");
-            ActionStatus_DisplayMessage(L["Enable Sound"], true);
+            ActionStatus:DisplayMessage(L["Enable Sound"], true);
         else
             SetCVar("Sound_EnableSFX", 0, "Doh!");
             SetCVar("Sound_EnableAmbience", 0, "Doh!");
             SetCVar("Sound_EnableDialog", 0, "Doh!");
             SetCVar("Sound_EnableMusic", 0, "Doh!");
-            ActionStatus_DisplayMessage(L["Disable Sound"], true);
+            ActionStatus:DisplayMessage(L["Disable Sound"], true);
         end
     end
 end
@@ -853,10 +853,10 @@ end
 function A:ForceMusic(off)
     if ( off ) then
         SetCVar("Sound_EnableMusic", 0, "Doh!");
-        ActionStatus_DisplayMessage(MUSIC_DISABLED, true);
+        ActionStatus:DisplayMessage(MUSIC_DISABLED, true);
     else
         SetCVar("Sound_EnableMusic", 1, "Doh!");
-        ActionStatus_DisplayMessage(MUSIC_ENABLED, true);
+        ActionStatus:DisplayMessage(MUSIC_ENABLED, true);
     end
 end
 
@@ -866,11 +866,11 @@ function A:ForceSound(off)
     if ( off ) then
         SetCVar("Sound_EnableSFX", 0, "Doh!");
         SetCVar("Sound_EnableAmbience", 0, "Doh!");
-        ActionStatus_DisplayMessage(SOUND_EFFECTS_DISABLED, true);
+        ActionStatus:DisplayMessage(SOUND_EFFECTS_DISABLED, true);
     else
         SetCVar("Sound_EnableSFX", 1, "Doh!");
         SetCVar("Sound_EnableAmbience", 1, "Doh!");
-        ActionStatus_DisplayMessage(SOUND_EFFECTS_ENABLED, true);
+        ActionStatus:DisplayMessage(SOUND_EFFECTS_ENABLED, true);
     end
 end
 
@@ -882,13 +882,13 @@ function A:ForceAll(off)
         SetCVar("Sound_EnableAmbience", 0, "Doh!");
         SetCVar("Sound_EnableDialog", 0, "Doh!");
         SetCVar("Sound_EnableMusic", 0, "Doh!");
-        ActionStatus_DisplayMessage(L["Disable Sound"], true);
+        ActionStatus:DisplayMessage(L["Disable Sound"], true);
     else
         SetCVar("Sound_EnableSFX", 1, "Doh!");
         SetCVar("Sound_EnableAmbience", 1, "Doh!");
         SetCVar("Sound_EnableDialog", 1, "Doh!");
         SetCVar("Sound_EnableMusic", 1, "Doh!");
-        ActionStatus_DisplayMessage(L["Enable Sound"], true);
+        ActionStatus:DisplayMessage(L["Enable Sound"], true);
     end
 end
 

@@ -1,9 +1,9 @@
-﻿## Interface: 80000
+﻿## Interface: 90010
 ## Title: Broker Volume
 ## Notes: A volume control for Data Broker.
 ## Author: Shenton
 ## SavedVariables: BrokerVolumeDB
-## Version: 1.8.0
+## Version: 1.9.0
 ## OptionalDeps: Ace3, LibDBIcon-1.0
 
 #@no-lib-strip@
