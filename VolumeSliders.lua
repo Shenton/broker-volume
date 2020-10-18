@@ -18,7 +18,7 @@ local format = format;
 -- GLOBALS: BrokerVolumeAmbienceSliderHigh, BrokerVolumeDialogSliderLow, BrokerVolumeDialogSliderHigh, ADD, MouseIsOver, SetCVar
 
 function A:CreateSlidersFrame()
-    local f = CreateFrame("Frame", "BrokerVolumeSlidersFrame", UIParent);
+    local f = CreateFrame("Frame", "BrokerVolumeSlidersFrame", UIParent, BackdropTemplateMixin and "BackdropTemplate");
     f:SetFrameStrata("DIALOG");
     f:SetSize(200, 305);
     f:SetClampedToScreen(true);
